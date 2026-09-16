@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Meu Cantinho, um painel pessoal para hábitos, diário, metas e progresso.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <title>Meu Cantinho</title>
+</head>
+
+<body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">MEU CANTINHO</p>
+        <h1>Olá, <span id="userNameLabel">você</span> 👋</h1>
+      </div>
+      <button class="icon-btn" id="settingsBtn" aria-label="Configurações">⚙️</button>
+    </header>
+
+    <main>
+      <section class="view active" id="view-home">
+        <div class="hero-card">
+          <div>
+            <span class="badge">SEU DIA, DO SEU JEITO</span>
+            <h2 id="todayGreeting">Hoje pode ser um dia bom.</h2>
+            <p id="todayDate"></p>
+          </div>
+          <div class="hero-symbol">✦</div>
+        </div>
+
+        <div class="section-title">
+          <div>
+            <span class="eyebrow">CHECK-IN</span>
+            <h3>Como foi seu dia?</h3>
+          </div>
+          <span class="date-pill" id="streakPill">🔥 0 dias</span>
+        </div>
+
+        <div class="mood-row" id="moodRow">
+          <button data-mood="ótimo">😄<small>Ótimo</small></button>
+          <button data-mood="bom">🙂<small>Bom</small></button>
+          <button data-mood="normal">😐<small>Normal</small></button>
+          <button data-mood="cansado">😴<small>Cansado</small></button>
+          <button data-mood="difícil">😕<small>Difícil</small></button>
+        </div>
+
+        <div class="section-title compact">
+          <div>
+            <span class="eyebrow">HÁBITOS DE HOJE</span>
+            <h3>Um passo de cada vez.</h3>
+          </div>
+        </div>
+
+        <div class="habit-list" id="homeHabitList"></div>
+
+        <div class="quick-grid">
+          <button class="quick-card" data-go="diario">
+            <span>📝</span>
+            <strong>Escrever</strong>
+            <small>Registrar meu dia</small>
+          </button>
+          <button class="quick-card" data-go="metas">
+            <span>🎯</span>
+            <strong>Metas</strong>
+            <small>Ver o que importa</small>
+          </button>
+          <button class="quick-card" data-go="progresso">
+            <span>📊</span>
+            <strong>Progresso</strong>
+            <small>Olhar meus números</small>
+          </button>
+          <button class="quick-card" data-go="contadores">
+            <span>🔥</span>
+            <strong>Contadores</strong>
+            <small>Acompanhar sequências</small>
+          </button>
+        </div>
+      </section>
+
+      <section class="view" id="view-habitos">
+        <div class="page-heading">
+          <span class="eyebrow">HÁBITOS</span>
+          <h2>O que você quer cultivar?</h2>
+          <p>Crie hábitos e marque cada dia concluído.</p>
+        </div>
+
+        <div class="add-row">
+          <input id="habitInput" maxlength="50" placeholder="Ex.: estudar programação">
+          <button class="primary-btn" id="addHabitBtn">Adicionar</button>
+        </div>
+
+        <div class="habit-list" id="allHabitList"></div>
+      </section>
+
+      <section class="view" id="view-diario">
+        <div class="page-heading">
+          <span class="eyebrow">DIÁRIO</span>
+          <h2>Coloque o dia no papel.</h2>
+          <p>Seu diário fica salvo neste dispositivo.</p>
+        </div>
+
+        <div class="card">
+          <label for="journalText">Como foi seu dia?</label>
+          <textarea id="journalText" maxlength="3000" placeholder="Escreva o que aconteceu, o que você sentiu, o que aprendeu..."></textarea>
+          <div class="form-footer">
+            <span id="journalCount">0/3000</span>
+            <button class="primary-btn" id="saveJournalBtn">Salvar entrada</button>
+          </div>
+        </div>
+
+        <div class="section-title compact">
+          <div>
+            <span class="eyebrow">HISTÓRICO</span>
+            <h3>Suas últimas entradas</h3>
+          </div>
+        </div>
+        <div id="journalHistory"></div>
+      </section>
+
+      <section class="view" id="view-metas">
+        <div class="page-heading">
+          <span class="eyebrow">METAS</span>
+          <h2>Coisas que você quer conquistar.</h2>
+          <p>Pequenas ações também contam.</p>
+        </div>
+
+        <div class="add-row">
+          <input id="goalInput" maxlength="80" placeholder="Ex.: terminar meu projeto">
+          <button class="primary-btn" id="addGoalBtn">Criar</button>
+        </div>
+
+        <div id="goalList"></div>
+      </section>
+
+      <section class="view" id="view-contadores">
+        <div class="page-heading">
+          <span class="eyebrow">CONTADORES</span>
+          <h2>Sequências pessoais.</h2>
+          <p>Crie contadores para acompanhar objetivos do seu jeito.</p>
+        </div>
+
+        <div class="add-row counter-add">
+          <input id="counterInput" maxlength="60" placeholder="Ex.: dias praticando programação">
+          <button class="primary-btn" id="addCounterBtn">Criar</button>
+        </div>
+
+        <div id="counterList"></div>
+      </section>
+
+      <section class="view" id="view-progresso">
+        <div class="page-heading">
+          <span class="eyebrow">PROGRESSO</span>
+          <h2>Olhe para trás.</h2>
+          <p>Não para se cobrar, mas para perceber o caminho.</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card"><span>🔥</span><strong id="statStreak">0</strong><small>dias de sequência</small></div>
+          <div class="stat-card"><span>✅</span><strong id="statChecks">0</strong><small>check-ins de hábitos</small></div>
+          <div class="stat-card"><span>📝</span><strong id="statJournals">0</strong><small>entradas no diário</small></div>
+          <div class="stat-card"><span>🎯</span><strong id="statGoals">0</strong><small>metas criadas</small></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title-row">
+            <div>
+              <span class="eyebrow">ÚLTIMOS 7 DIAS</span>
+              <h3>Check-ins</h3>
+            </div>
+          </div>
+          <div class="week-chart" id="weekChart"></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-config">
+        <div class="page-heading">
+          <span class="eyebrow">CONFIGURAÇÕES</span>
+          <h2>Deixe o cantinho com a sua cara.</h2>
+        </div>
+
+        <div class="card settings-card">
+          <label for="nameInput">Como quer ser chamado?</label>
+          <input id="nameInput" maxlength="30" placeholder="Seu nome">
+          <button class="primary-btn full" id="saveNameBtn">Salvar nome</button>
+        </div>
+
+        <div class="card">
+          <div class="card-title-row">
+            <div>
+              <span class="eyebrow">SEUS DADOS</span>
+              <h3>Backup</h3>
+            </div>
+          </div>
+          <p class="muted">Exporte um arquivo JSON para guardar uma cópia. Você também pode importar esse arquivo em outro dispositivo.</p>
+          <div class="button-row">
+            <button class="secondary-btn" id="exportBtn">Exportar dados</button>
+            <label class="secondary-btn file-btn">
+              Importar dados
+              <input type="file" id="importInput" accept="application/json">
+            </label>
+          </div>
+        </div>
+
+        <div class="card warning-card">
+          <span>🔐</span>
+          <div>
+            <h3>Privacidade</h3>
+            <p>Esta primeira versão guarda os dados no armazenamento do navegador. Isso não sincroniza automaticamente entre celular e PC. O backup JSON serve para transportar seus dados manualmente.</p>
+          </div>
+        </div>
+
+        <button class="danger-btn" id="resetBtn">Apagar todos os dados deste dispositivo</button>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Navegação">
+      <button class="nav-btn active" data-view="home"><span>⌂</span><small>Início</small></button>
+      <button class="nav-btn" data-view="habitos"><span>✓</span><small>Hábitos</small></button>
+      <button class="nav-btn" data-view="diario"><span>✎</span><small>Diário</small></button>
+      <button class="nav-btn" data-view="metas"><span>🎯</span><small>Metas</small></button>
+      <button class="nav-btn" data-view="progresso"><span>▥</span><small>Progresso</small></button>
+    </nav>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
